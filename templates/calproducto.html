@@ -180,15 +180,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -212,15 +208,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"id="cal_pro" name=" cal_pro">1</i>
+                                    <i class="fa fa-star"id="cal_pro" name=" cal_pro">2</i>
+                                    <i class="fa fa-star"id="cal_pro" name=" cal_pro">3</i>
+                                    <i class="fa fa-star"id="cal_pro" name=" cal_pro">4</i>
+                                    <i class="fa fa-star"id="cal_pro" name=" cal_pro">5</i>
                                    
                                 </div>
                             </div>
@@ -229,11 +221,11 @@
                                     <img src="../static/img/product-2.jpg" alt="Product Image">
                                 </a>
                                 <div class="product-action">
-                                    <div class="product-action">
-                                        <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                        <a href="#"><i class="fa fa-heart"></i></a>
-                                        <a href="#"><i class="fa fa-search"></i></a>
-                                    </div>
+                                    <i class="fa" id="cal_pro" name=" cal_pro">1</i>
+                                    <i class="fa" id="cal_pro" name=" cal_pro">2</i>
+                                    <i class="fa" id="cal_pro" name=" cal_pro">3</i>
+                                    <i class="fa" id="cal_pro" name=" cal_pro">4</i>
+                                    <i class="fa" id="cal_pro" name=" cal_pro">5</i>
                                 </div>
                             </div>
                             <div class="product-price">
@@ -247,15 +239,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -279,15 +267,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -311,13 +295,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    
-                                    {% if sesion_iniciada %}
-                                    <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                    {%else%}
-                                    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                    {%endif%}
-
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -326,7 +308,11 @@
                                 </a>
                                 <div class="product-action">
                                     <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                    
+                                    {% if sesion_iniciada %}
+                                    <button class="fa fa-heart" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
+                                    {%else%}
+                                    <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-heart"></i></button>
+                                    {%endif%}
                                     <a href="#"><i class="fa fa-heart"></i></a>
                                     
                                     <a href="#"><i class="fa fa-search"></i></a>
@@ -343,15 +329,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -375,15 +357,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -407,15 +385,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
@@ -439,15 +413,11 @@
                             <div class="product-title">
                                 <a href="#">Calificar Producto</a>
                                 <div class="ratting">
-                                    <div class="ratting">
-                                    
-                                        {% if sesion_iniciada %}
-                                        <button class="fa fa-star" onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ></button>
-                                        {%else%}
-                                        <button onclick="document.getElementById('id01').style.display='block'" style="width:auto;" ><i  class="fa fa-star"></i></button>
-                                        {%endif%}
-    
-                                    </div>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
                                 </div>
                             </div>
                             <div class="product-image">
