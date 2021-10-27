@@ -151,10 +151,10 @@ def login():
             id_usuario_califica = res[0][0]
             sesion_iniciada= True
 
-            if session['tipo_user']== 'user_admin' or 'user_superadmin':
-                return render_template('loginadmin.html')
             if session['tipo_user']== 'user_final':
-                return render_template('indexuser.html',form=form, titulo= f"Bienvenido {session['nombre']}", messages =res)
+               return render_template('indexuser.html',form=form, titulo= f"Bienvenido {session['nombre']}", messages =res) 
+            if session['tipo_user']==  'user_admin' or 'user_superadmin':
+                return render_template('loginadmin.html')
             else:
              flash('ERROR: Usuario o clave invalidas')
              return render_template('login.html', form=form, titulo=' ')
