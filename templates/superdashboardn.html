@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+
+{% block indice%} <li class="breadcrumb-item active"><a href="superdashboardn.html">Administrador</a></li>{%endblock%}
+{% block contenido %}
+
+<!-- My Account Start -->
+<div class="my-account">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="nav flex-column nav-pills" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="dashboard-nav" data-toggle="pill" href="#dashboard-tab" role="tab"><i class="fa "></i>Inicio Adm</a>
+                    <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fabag  "></i>Gestionar Usuarios_Finales</a>
+                    <a class="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i class="fabag  "></i>Gestionar Administradores</a>
+                    <a class="nav-link" id="payment-nav" data-toggle="pill" href="#payment-tab" role="tab"><i class="fa f "></i>Administrar Productos</a>
+                    
+                   
+                    <a class="nav-link" href="/logout"><i class="fa fa-sign-out-alt"></i>Salir</a>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="tab-content">
+                    
+        <div class="tab-pane fade show active" id="dashboard-tab" role="tabpanel" aria-labelledby="dashboard-nav">
+                         <hr>
+        <h4>Estadisticas</h4>
+                         <hr>
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Mi primer gráfico con Google Charts</title>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="../static/js/myCharts.js"></script>
+
+
+</head>
+<body>
+
+<div id="columnchart_values" style="width: 400px; height: 400px;"></div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+
+
+                    <div class="tab-pane fade" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
+                        
+  <!---->  <div class="search">
+                    <input type="text" placeholder="Search">
+                    <button><i class="fa fa-search"></i></button>
+                </div>
+<hr>
+
+           <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NOMBRE</th>
+                                        <th>CORREO</th>
+                                        <th>CEDULA</th>
+                                        <th>CONTRASEÑA</th>
+                                          <th>ESTADO</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>nombre uno</td>
+                                        <td>usuario1@correo.com</td>
+                                        <td>0986332</td>
+                                        <td>contraseña1</td>
+                                        <td>Activo</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>nombre dos</td>
+                                        <td>usuario2@correo.com</td>
+                                        <td>0231242</td>
+                                        <td>contraseña2</td>
+                                        <td>Activo</td>
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>nombre tres</td>
+                                        <td>usuario3@correo.com</td>
+                                        <td>3333333</td>
+                                        <td>contraseña3</td>
+                                        <td>Activo</td>
+                                        
+                                    </tr>
+                                </tbody>
+                            </table> 
+<hr>
+            <button class="btn"><a href="/addadmin">Agregar</a></button>
+            <button class="btn">Editar</button>
+            <button class="btn"><a href="/deleteuser">Eliminar</a></button>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="payment-tab" role="tabpanel" aria-labelledby="payment-nav">
+                       
+
+        <div class="search">
+                  <!-- <input type="text" placeholder="Search">-->      
+                   <!--     <button><i class="fa fa-search"></i></button>-->    
+                    </div>
+         <hr>
+
+          <!--  <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>CODIGO</th>
+                                        <th>NOMBRE</th>
+                                        <th>TIPO</th>
+                                        <th>CANTIDAD</th>
+                                        <th>CANTIDAD MIN.</th>
+                                        <th>CANTIDAD MAX.</th>
+                                        <th>PRECIO VENTA</th>
+                                        <th>CALIFICACION</th>
+                                        <th>DESCRIPCION</th>
+                                    </tr>
+                                </thead> --> 
+                                {% for pro in res %}
+                                <tbody>
+                                    <tr>
+                                        <td>{%print(pro[0])%}</td>
+                                        <td>{%print(pro[1])%}</td>
+                                        <td>{%print(pro[2])%}</td>
+                                        <td>{%print(pro[3])%}</td>
+                                        <td>{%print(pro[4])%}</td>
+                                        <td>{%print(pro[5])%}</td>
+                                        <td>{%print(pro[6])%}</td>
+                                        <td>{%print(pro[7])%}</td>
+                                        <td>{%print(pro[8])%}</td>
+                                    </tr>
+                                    
+                                </tbody>
+                                {% endfor %}
+                            </table>
+<hr>
+            <button class="btn"><i class="fa fa-plus"><a href="/agregarP"></i> Agregar Producto</a></button>
+            <button class="btn"><i class="fa fa-sort"><a href="/editarP"></i> Editar Producto</a></button>
+            <button class="btn"><i class="fa fa-trash"><a href="/deleteP"></i> Eliminar Producto</a></button>
+                        </div>
+
+    
+
+                    </div>
+                  
+             
+                        
+                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- My Account End -->
+
+
+{% endblock %}

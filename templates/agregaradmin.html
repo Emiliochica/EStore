@@ -3,7 +3,7 @@
 
 {% block contenido %}
   <!-- Login Start -->
-  <form action='/registro' method='POST'>
+  <form action='/addadmin' method='POST'>
   <div class="login">
     <div class="container-fluid">
         <div class="row" id="fmregistroSup">
@@ -311,6 +311,19 @@
                             <p class="requerido">*Campo requerido</p>
                         </div>
                         <div class="col-md-12">
+                            <label>Tipo de Usuario</label>
+                            <select ide="tipo_user" name="tipo_user" class="form-control" >
+                              <option value=" " ide="tipo_user" name="tipo_user"> </option>
+                              <option value="user_admin" ide="tipo_user" name="tipo_user">Administrador</option>
+                              <option value="user_superadmin" ide="tipo_user" name="tipo_user">SuperAdministrador</option>
+                                                                  
+                              </select>
+                              <div class="col-md-12">
+                                <p class="requerido">*Campo requerido</p>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
                             <p></p>
                         </div>
                         <div class="col-md-12" id="centertext">
@@ -327,7 +340,7 @@
                         
                         <div class="col-md-12" id="btnenviar">
                             <button class="btn">Enviar</button>
-                            <button class="btn"><a href="/">Regresar</a></button>
+                            <button class="btn"><a href="/dash">Regresar</a></button>
                         </div>
                         {% for msg in get_flashed_messages() %}
                         <div class="col-md-12">{{ msg }}</div>
