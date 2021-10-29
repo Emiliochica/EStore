@@ -59,6 +59,7 @@
                     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"><span class="fa fa-trash"></span></button> -->
                   </td>
                 </tr>
+                {% endfor %}
                 <script type="text/javascript">
                 
                     function closeModal(e){
@@ -144,6 +145,7 @@
                             contentType: "application/json",
                             dataType: 'json',
                             success: function(response){
+                                console.info('llegó bien', response);
                                 window.location.reload();
                             },
                             error: function(e){
@@ -152,7 +154,6 @@
                         });                        
                     }
                 </script>
-                {% endfor %}
               </tbody>
             </table>
           </div>

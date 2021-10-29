@@ -49,8 +49,10 @@ def queryWishList():
         sSelected = ''
         for item in aItems:
             sSelected += item +', ' 
-        print (sSelected[0:len(sSelected)-2])
-        sql = f'SELECT id_producto, nombre_pro, tipo_pro, cantidad, precio_venta, descripcion FROM productos WHERE id_producto not in({sSelected[0:len(sSelected)-2]})'
+        if len(sSelected) == 0:
+            sql = f'SELECT id_producto, nombre_pro, tipo_pro, cantidad, precio_venta, descripcion FROM productos'
+        else:
+            sql = f'SELECT id_producto, nombre_pro, tipo_pro, cantidad, precio_venta, descripcion FROM productos WHERE id_producto not in({sSelected[0:len(sSelected)-2]})'
         res = seleccion(sql)
         return jsonify(res)
 
@@ -69,8 +71,10 @@ def addWishProduct():
         sql = 'SELECT max(WishListID) FROM WishList'
         res = seleccion(sql)
         idUser = session['id_usuario']
-        nextId = int(res[0][0])+1
-        
+        if res[0][0] is None:
+            nextId = 1
+        else:
+            nextId = int(res[0][0])+1
         sqlInsert = f"INSERT INTO WishList ( WishListID, UserID, ProductID, WLDate) VALUES (?, ?, ?, CURRENT_TIMESTAMP)"
 
         resInsert = accion(sqlInsert,(nextId, idUser, oItem['id']))
@@ -82,7 +86,7 @@ def addWishProduct():
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"
         message = template.format(type(ex).__name__, ex.args)
         print(message)
-        flash('La sesión actual ha terminado. Debe iniciar sesión nuevamente', 'danger')
+        flash('Fallo al llamar endpoint addWishProduct')
         # return redirect('/login')
         return jsonify({"error": 'algo pasó'})
 
