@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block indice%} <li class="breadcrumb-item active"><a href="#">Editar Producto</a></li>{%endblock%}
+
+{% block contenido %}
+
+<form action='/editadmin' method='POST'>  
+<div class="login">
+    <div class="container-fluid">
+        <div class="row" id="fmregistroSup">
+            <div class="col-lg-6" id="fmregistro">    
+                <div class="register-form">
+                    <div class="row">
+                        <div class="col-25">
+                          <label for="fname">Buscar Usuario</label>
+                        </div>
+                            <div class="col-75">
+                              <input type="text" id="id_p" name="id_p" placeholder=" ">
+                              <div class="col-76">
+                                <input type="submit" value="Buscar">
+                              </div>
+                                                                
+                            </div>
+                        </div>
+                </div>
+            <!--   {% if 'id_producto' in session  %}
+                  {% for pro in res %}
+                         
+                  <div class="container">
+                    <form action='/updatepro' method='POST'>
+                    <div class="row">
+                      <div class="col-25">
+                      
+                        <label for="fname">Nombre del Producto</label>
+                      </div>
+                                                                 
+                      <div class="col-75">
+                        <input type="text" id="nom_prod" name="nom_prod", value={%print(res[0][1])%} >
+                      </div>
+                     
+                    </div>
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="lname">ID Producto</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="text" id="id_producto" name="id_producto", value={%print(res[0][0])%}>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="lname">Tipo de Producto</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="text" id="tipo_pro" name="tipo_pro", value={%print(res[0][2])%}>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="lname">Cantidad Producto</label>
+                      </div>
+                      <div class="col-75">
+                        <input type="text" id="cantidad_p" name="cantidad_p" , value={%print(res[0][3])%}>
+                      </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-25">
+                          <label for="lname">Cantidad Minima</label>
+                        </div>
+                        <div class="col-75">
+                          <input type="text" id="can_min" name="can_min" , value={%print(res[0][4])%}>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-25">
+                          <label for="lname">Cantidad Maxima</label>
+                        </div>
+                        <div class="col-75">
+                          <input type="text" id="can_max" name="can_max" , value={%print(res[0][5])%}>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-25">
+                          <label for="fname">Precio de Venta</label>
+                        </div>
+                        <div class="col-75">
+                          <input type="text" id="pre_ven" name="pre_ven" , value={%print(res[0][6])%}>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-25">
+                          <label for="fname">Calificación</label>
+                        </div>
+                        <div class="col-75">
+                            <label>{%print(res[0][7])%}</label>
+                        </div>
+                      </div>
+                    
+                    <div class="row">
+                      <div class="col-25">
+                        <label for="subject">Descripcion</label>
+                      </div>
+                      <div class="col-75">
+                        <textarea id="descri" name="descri"  style="height:200px">{%print(res[0][8])%}
+
+                        </textarea>
+                      </div>
+                     
+                    </div>
+                    
+                    <br>
+                    <div class="col-md-12" id="btnenviar">
+                      <button class="btn">Enviar</button>
+                  </div>
+                    
+                  </div>
+                <div class="col-md-12">
+                  {% for msg in get_flashed_messages() %}
+                  <div class="col-md-12">{{ msg }}</div>
+                  {% endfor %} 
+                </div>
+                
+
+                    {% endfor %}
+                {% endif %} -->
+              </form>                               
+                    </div>
+                  </div>
+              </div>
+              
+          </div>
+      </div>
+  </div>
+  </form>
+  <!-- Login End -->
+  
+  {% endblock %}

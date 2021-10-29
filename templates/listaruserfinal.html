@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+
+{% block contenido %}
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+        <tr>   
+        <td width="2">id</td> 
+        <td width="2">Nombre</td> 
+        <td width="2">Apellido</td> 
+        <td width="2">Email</td>
+        <td width="2">Telefono</td>
+        <td width="2">Tipo Documento</td>
+        <td width="2">Numero</td> 
+        <td width="2">Pais</td>  
+        <td width="2">Departamento</td>   
+        <td width="2">Ciudad</td>
+        <td width="2">Direccion</td> 
+        <td width="2">Fecha Nacimiento</td>
+        <td width="2">Condiciones</td> 
+        <td width="2">Promociones</td> 
+
+     
+     {% for user in res %}
+      <tr>
+        <td width="2">{% print(user[0]) %}</td>
+        <td width="2">{% print(user[1]) %}</td>  
+        <td width="2">{% print(user[2]) %}</td> 
+        <td width="2">{% print(user[3]) %}</td> 
+        <td width="2">{% print(user[4]) %}</td> 
+        <td width="2">{% print(user[5]) %}</td> 
+        <td width="2">{% print(user[6]) %}</td> 
+        <td width="2">{% print(user[7]) %}</td> 
+        <td width="2">{% print(user[8]) %}</td> 
+        <td width="2">{% print(user[9]) %}</td>
+        <td width="2">{% print(user[10]) %}</td> 
+        <td width="2">{% print(user[11]) %}</td>  
+        <td width="2">{% print(user[12]) %}</td> 
+        <td width="2">{% print(user[13]) %}</td> 
+      </tr>
+      {% endfor %}
+   </tr> 
+    </thead>
+    </table>
+    <div class="col-md-12" id="btnenviar">
+       <button class="btn"><a href="/dash">Regresar</a></button>
+    </div>
+    </div>
+    
+
+
+
+
+
+{% endblock %}

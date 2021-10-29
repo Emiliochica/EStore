@@ -152,7 +152,7 @@ def login():
             sesion_iniciada= True
 
             if session['tipo_user']== 'user_final':
-               return render_template('indexuser.html',form=form, titulo= f"Bienvenido {session['nombre']}", messages =res) 
+               return render_template('indexuser.html',form=form, titulo= f"{session['nombre']}", messages =res) 
             if session['tipo_user']==  'user_admin' or 'user_superadmin':
                 return render_template('loginadmin.html')
             else:
@@ -181,6 +181,7 @@ def administrador():
     else:
          ema = (request.form['email'])
          con = escape(request.form['contrasena'])
+         
          sql = f'SELECT u.id_usuario, u.nickname, u.contrasena, u.tipo_user, p.nombre FROM usuarios as u inner join personas as p on u.nickname= p.email WHERE u.nickname= "{ema}"'
          res = seleccion(sql)
     if len(res)==0:
@@ -199,9 +200,9 @@ def administrador():
              sesion_iniciada= True
              tipo_user = res[0][3]
         if session['tipo_user']== 'user_admin':
-                return render_template('dashboardn.html', titulo= f"Bienvenido {session['nombre']}", messages =res)
+                return render_template('dashboardn.html', titulo= f"¡Bienvenido {session['nombre']}!", messages =res)
         if session['tipo_user']== 'user_superadmin':
-                return render_template('superdashboardn.html', titulo= f"Bienvenido {session['nombre']}", messages =res)
+                return render_template('superdashboardn.html', titulo= f"¡Bienvenido {session['nombre']}!", messages =res)
         else:
             flash('ERROR: Usuario o clave invalidas')
         return render_template('loginadmin.html')
@@ -305,13 +306,13 @@ def editarP():
             id_producto=id
     
             flash(' Producto Encontrado')
-            return render_template("updateP.html", res=res, titulo= f"Bienvenido {session['calificacion']}", messages =res)
+            return render_template("updateP.html", res=res, messages =res)
 
 @app.route("/updatepro", methods=[ "GET","POST"])
 def updatepro():
     global tipo_user
     form = Productoedit()
-    if  request.method == "POST": #Si la ruta es accedida a través del método GET entonces
+    if  request.method == "POST": 
 	  
         # Recuperar los datos del formulario
         nom = (request.form['nom_prod'])
@@ -360,7 +361,7 @@ def calproducto():
     global id_usuario_califica
     global id_producto
     if  request.method == "GET":
-        return render_template("calproducto.html", titulo= f"ID_Usuario: {id_usuario_califica}" )
+        return render_template("calproducto.html", titulo= f"¡Hola {id_usuario_califica}!" )
     else:
         cali = (request.form['cal_pro'])
         id_p= (request.form['id_producto'])
@@ -469,41 +470,73 @@ def addadmin():
 @app.route("/editadmin", methods=[ "GET","POST"])
 def editadmin():
     if  request.method == "GET": #Si la ruta es accedida a través del método GET entonces
-	    return render_template('editadmin.html', form=form,titulo=' ')
+	    return render_template('editaruser.html', form=form,titulo=' ')
     else:
-     id = escape(request.form['id_admin'])
+     id = escape(request.form['id_p'])
 
-    sql = f'SELECT id_persona, nombre, apellido, email, telefono, tipo_id, num_id, pais, departamento, ciudad, direccion FROM personas WHERE id_persona = "{id}"'
+    sql = f'SELECT p.id_persona, p.nombre, p.apellido, p.email, p.telefono, p.tipo_id, p.num_id, u.tipo_user FROM personas as p inner join usuarios as u on p.email= u.nickname WHERE id_persona = "{id}"'
     res = seleccion(sql)
     if len(res)==0:
         flash('ERROR: Codigo Incorrecto')
-    sql = f'SELECT id_usuario, nickname, contrasena,tipo_user FROM personas WHERE id_persona = "{id}"'
-    res = seleccion(sql)
-    if len(res)==0:
-        flash('ERROR: Codigo Incorrecto')
-        return render_template("editP.html", form=form, titulo= " ")
+        return render_template("editaruser.html", titulo= " ")
     else:
         #cbd = res[0][0]
        # if check_password_hash(cbd, id):
             session.clear()
-            session['id_producto'] = id
-            session['nombre_pro'] = res[0][1]
-            session['tipo_pro'] = res[0][2]
-            session['cantidad'] = res[0][3]
-            session['cantidad_min'] = res[0][4]
-            session['cantidad_max'] = res[0][5]
-            session['precio_venta'] = res[0][6]
-            session['calificacion'] = res[0][7]
-            session['descripcion'] = res[0][8]
-            id_producto=id
+            session['id_persona'] = res[0][0]
+            session['nombre'] = res[0][1]
+            session['apellido'] = res[0][2]
+            session['email'] = res[0][3]
+            session['telefono'] = res[0][4]
+            session['tipo_id'] = res[0][5]
+            session['num_id'] = res[0][6]
+            session['tipo_user'] = res[0][7]
+            
     
-            flash(' Producto Encontrado')
-            return render_template("updateP.html", res=res, titulo= f"Bienvenido {session['calificacion']}", messages =res)
+            flash(' Usuario Encontrado')
+            return render_template("updateuser.html", res=res, messages =res)
 
+@app.route("/updateuser", methods=[ "GET","POST"])
+def updateuser():
+    global tipo_user
+    form = Productoedit()
+    if  request.method == "POST": 
+	  
+        # Recuperar los datos del formulario
+        id = (request.form['id_p'])
+        nom = (request.form['nombre'])
+        ape = (request.form['apellido'])
+        ema = (escape(request.form['email']))
+        tel = (escape(request.form['telefono']))
+        tipo_doc= (escape(request.form['tipo_ide']))
+        num_ide = (escape(request.form['num_ide']))
+        tip_user = (request.form['tipo_user'])
 
+        sql = f"UPDATE personas SET nombre='{nom}', apellido='{ape}', email='{ema}', telefono='{tel}', tipo_id='{tipo_doc}', num_ide='{num_ide}' WHERE id_persona='{id}'"
 
+        res = seleccion(sql)
+        if res!=0:
+            flash('INFO: Datos actualizados con exito en PRODUCTO')
+        else:
+         flash('ERROR EN PERSONA: Por favor reintente')
+        
+        sql = f"UPDATE usuarios SET tipo_user='{tip_user}' WHERE id_usuarios='{id}'"
+        res = seleccion(sql)
+        if res!=0:
+            flash('INFO: Datos actualizados con exito')
+        else:
+         flash('ERROR EN PERSONA: Por favor reintente')
+        if tipo_user == 'user_superadmin':
+            return render_template('superdashboardn.html')
+        
 
-
+@app.route("/listaruserfinal", methods= ["GET"])
+def listaruserfinal():
+    tipo_user= 'user_final'
+    sql = f'SELECT p.*  FROM personas as p join usuarios as u on p.email =u.nickname where u.tipo_user="{tipo_user}" '
+    res = seleccion(sql)
+    return render_template("listaruserfinal.html", res=res)
+   
 
 
 @app.route("/deleteuser", methods=[ "GET","POST"])

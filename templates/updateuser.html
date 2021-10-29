@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block indice%} <li class="breadcrumb-item active"><a href="#">Editar Administrador</a></li>{%endblock%}
+
+{% block contenido %}
+  <form action='/updatuser' method='POST'>   
+       {% if 'id_persona' in session  %}
+                  {% for pro in res %}
+                  <div class="login">
+                    <div class="container-fluid">
+                        <div class="row" id="fmregistroSup">
+                            <div class="col-lg-6" id="fmregistro">    
+                                <div class="register-form">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>ID </label>
+                                            <input class="form-control" type="text"  ide="id_p" name="id_p", value= {%print(res[0][0])%}>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <label>Nombre</label>
+                                            <input class="form-control" type="text"  ide="nombre" name="nombre", value= {%print(res[0][1])%}>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Apellido</label>
+                                            <input class="form-control" type="text" ide="apellido" name="apellido", value= {%print(res[0][2])%}>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>E-mail</label>
+                                            <input class="form-control" type="text"  ide="email" name="email", value={%print(res[0][3])%}>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Teléfono</label>
+                                            <input class="form-control" type="text"  ide="telefono" name="telefono", value={%print(res[0][4])%}>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="tipoId">Tipo de documento</label>
+                                            <select ide="tipo_ide" name="tipo_ide" class="form-control">
+                                            <option value={%print(res[0][5])%} ide="tipo_ide" name="tipo_ide">{%print(res[0][5])%} </option>
+                                            <option value="CC" ide="tipo_ide" name="tipo_ide">Cedula Ciudadania</option>
+                                            <option value="CE" ide="tipo_ide" name="tipo_ide">Cedula Extranjeria</option>
+                                            <option value="PTE" ide="tipo_ide" name="tipo_ide">Pasaporte</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Número de identificación</label>
+                                            <input class="form-control" type="text"  id="num_ide" name="num_ide", value={%print(res[0][6])%} >
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label>Tipo de Usuario</label>
+                                            <input class="form-control" type="text"  id="tipo_user" name="tipo_user", value={%print(res[0][7])%} >
+                                        </div>                                     
+                                         
+                                                                               
+                                        
+                                        <div class="col-md-12" id="btnenviar">
+                                            <button class="btn">Enviar</button>
+                                            <button class="btn"><a href="/dash">Regresar</a></button>
+                                        </div>
+                                        {% for msg in get_flashed_messages() %}
+                                        <div class="col-md-12">{{ msg }}</div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        {% endif %}
+ </form>                               
+                  
+              
+   
+
+
+
+{% endblock %}
