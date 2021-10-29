@@ -9,7 +9,19 @@
       <div class="row">
         <div class="col-md-12">
           <div class="table-responsive">
-            <table class="table table-bordered">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    </div>
+                    <div class="navbar-nav ml-auto">
+                        <div class="nav-item dropdown">
+                            <!-- <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cuenta de usuario</a> -->
+                            <!-- <button  onclick="openModal(this)"><i class="fa fa-trash"></i>Agregar producto</button> -->
+                            <button type="button" onclick="openProductSelect(this)" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong"><i class="fa fa-plus-circle m-1" data-target="#exampleModalLong" aria-hidden="true"></i>Agregar producto</button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <table id="tblListaDeseos" class="table table-bordered">
               <thead class="thead-dark">
                 <tr>
                   <th>Referencia / Descripción</th>
@@ -28,7 +40,7 @@
                         class="fa fa-heart m-3"
                       ></span>
                       <!-- <a href="#"><img src="../static/img/product-6.jpg" alt="Image"></a> -->
-                      <p>{{ row[2] }}</p>
+                      <p>{{ row[2] }} ({{row[4]}})</p>
                     </div>
                   </td>
                   <td>{{ row[3] }}</td>
@@ -48,6 +60,7 @@
                   </td>
                 </tr>
                 <script type="text/javascript">
+                
                     function closeModal(e){
                         console.log(e);
                         $('#exampleModal').modal('hide');
@@ -73,80 +86,73 @@
                         });
 
                     }
+                    function openProductSelect(e){
+                        console.log('test');
+                        console.log('test2');
+                        console.log('test');
+                        // $('#tblListaDeseos tr').each(function(idx, el){
+                        //     let self = $(this);
+                        //     console.log(self.find("td:eq(0)").text().trim())
+                        // });
+                        var oTable = document.querySelector('#tblListaDeseos');
+                        var aItems = [];
+                        for (let idx in oTable.rows){
+                            let oCurrenRow = oTable.rows[idx];
+                            for (let i in oCurrenRow.cells){
+                                let oCurrentCell = oCurrenRow.cells[i];
+                                if(oCurrentCell.nodeName === 'TH'){
+                                    break;
+                                }
+                                if (parseInt(i)===2){
+                                    aItems.push(oCurrentCell.childNodes[1].dataset.refer);
+                                }
+                            }
+                        }
+                        $.ajax({
+                            url:'/queryWishList',
+                            data: JSON.stringify(aItems),
+                            method: 'POST',
+                            contentType: "application/json",
+                            dataType: 'json',
+                            success: function(response){
+                                $('#infoTable tbody').empty();
+                                response.forEach(aRowContent => {
+                                    let [id, productName, category, qty, price] = aRowContent;
+                                    $('#infoTable').append(`<tr>
+                                        <td> ${productName}</td>
+                                        <td>${category}</td>
+                                        <td>${qty}</td>
+                                        <td>${price}</td>
+                                        <td>
+                                            <button class="btn btn-primary" data-refer="${id}" data-pname="${productName}" onclick="addProduct(this)"><i class="fa fa-plus"></i></button>
+                                        </td>
+                                        <td></td>
+                                    </tr>`);
+                                    });
+                                console.info('Bien!', response);
+                            },
+                            error: function(e){
+                                console.error(e);
+                            }
+                        });
+                    }
+                    function addProduct(e){
+                        $.ajax({
+                            url:'/addWishProduct',
+                            data: JSON.stringify({id:e.dataset.refer}),
+                            method: 'POST',
+                            contentType: "application/json",
+                            dataType: 'json',
+                            success: function(response){
+                                window.location.reload();
+                            },
+                            error: function(e){
+                                console.error(e);
+                            }
+                        });                        
+                    }
                 </script>
                 {% endfor %}
-                <!-- <tr>
-                                    <td>
-                                        <div class="img">
-                                            <a href="#"><img src="../static/img/product-7.jpg" alt="Image"></a>
-                                            <p>Nombre de Producto</p>
-                                        </div>
-                                    </td>
-                                    <td>$99</td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                            <input type="text" value="1">
-                                            <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td><button class="btn-cart">Test 01</button></td>
-                                    <td><button><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="img">
-                                            <a href="#"><img src="../static/img/product-8.jpg" alt="Image"></a>
-                                            <p>Nombre de Producto</p>
-                                        </div>
-                                    </td>
-                                    <td>$99</td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                            <input type="text" value="1">
-                                            <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td><button class="btn-cart">Agregar a Carrito</button></td>
-                                    <td><button><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="img">
-                                            <a href="#"><img src="../static/img/product-9.jpg" alt="Image"></a>
-                                            <p>Nombre de Producto</p>
-                                        </div>
-                                    </td>
-                                    <td>$99</td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                            <input type="text" value="1">
-                                            <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td><button class="btn-cart">Agregar a Carrito</button></td>
-                                    <td><button><i class="fa fa-trash"></i></button></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="img">
-                                            <a href="#"><img src="../static/img/product-10.jpg" alt="Image"></a>
-                                            <p>Nombre de Producto</p>
-                                        </div>
-                                    </td>
-                                    <td>$99</td>
-                                    <td>
-                                        <div class="qty">
-                                            <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                            <input type="text" value="1">
-                                            <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                        </div>
-                                    </td>
-                                    <td><button class="btn-cart">Agregar a Carrito</button></td>
-                                    <td><button><i class="fa fa-trash"></i></button></td>
-                                </tr> -->
               </tbody>
             </table>
           </div>
@@ -155,30 +161,96 @@
     </div>
   </div>
 </div>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-primary mt-lg-4" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
 <!-- Wishlist End -->
+<!-- Modal de confirmación  -->
 <div
-  class="modal"
+class="modal"
   id="exampleModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
->
+  >
   <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
           Eliminar de la lista de deseos
         </h5>
-
-      </div>
-      <div id="msgConfirm" class="modal-body">¿Desea eliminar el elemento?</div>
-      <div class="modal-footer">
+        
+    </div>
+    <div id="msgConfirm" class="modal-body">¿Desea eliminar el elemento?</div>
+    <div class="modal-footer">
         <button id="btnEliminate" type="button" onclick="deleteRow(this)" data-idvalue="no" class="btn btn-primary">Continuar</button>
         <a onclick="closeModal(this)" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</a>
+    </div>
+    </div>
+</div>
+</div>
+<!-- fin Modal de confirmación  -->
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+  </button>
+  
+  <!-- Modal de selección de producto -->
+  <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Agregar a lista de deseos</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <table id="infoTable" class="table table-fixed table-condensed">
+                <thead>
+                  <tr>
+                    <th class="col-xs-3">Nombre</th>
+                    <th class="col-xs-3">Categoría</th>
+                    <th class="col-xs-6">Cantidad</th>
+                    <th class="col-xs-6">Precio unitario</th>
+                    <th class="col-xs-6">Acción</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="clickableRow">
+                    <td class="col-xs-3">John</td>
+                    <td class="col-xs-3">43</td>
+                    <td class="col-xs-6">School Teacher</td>
+                    <td class="col-xs-6">$43,000</td>
+                  </tr>
+                  <tr class="clickableRow">
+                    <td class="col-xs-3">Tim</td>
+                    <td class="col-xs-3">52</td>
+                    <td class="col-xs-6">Plumber</td>
+                    <td class="col-xs-6">$55,000</td>
+                  </tr>
+                  <tr class="clickableRow">
+                    <td class="col-xs-3">John</td>
+                    <td class="col-xs-3">43</td>
+                    <td class="col-xs-6">School Teacher</td>
+                    <td class="col-xs-6">$43,000</td>
+                  </tr>
+                </tbody>
+              </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 {% endblock %}
             <!-- Modal -->

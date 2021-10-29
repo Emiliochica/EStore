@@ -1,8 +1,8 @@
 import os
 from re import escape
-from flask import Flask, render_template, redirect, session, flash, request
+from flask import Flask, render_template, redirect, session, flash, request, jsonify
 from werkzeug.security import check_password_hash, generate_password_hash
-from database import accion, seleccion
+from database import accion, seleccion, seleccionSecure
 
 from forms import Login, Registro, Producto, EditarP
 from utils import email_valido, pass_valido 
@@ -20,32 +20,71 @@ def inicio():
 def productos():
     return render_template("product-list.html")
 
-def validateSession():
-    try:
-        print(f'Id Usuario: {session["id_usuario"]}')
-        return True
-    except:
-        print('Sesión no válida')
-        return None
-
 @app.route("/listadeseos", methods= ["GET", "POST"])
 def lista_deseos():
-    if validateSession() == True:
-        sql = f'SELECT wl.WishListID, wl.ProductID, p.nombre_pro, p.precio_venta FROM WishList as wl INNER JOIN productos AS p on wl.ProductID = p.id_producto WHERE wl.UserID="9"'
-        res = seleccion(sql)
+    try:
+        sql = 'SELECT wl.WishListID, wl.ProductID, p.nombre_pro, p.precio_venta, p.tipo_pro FROM WishList as wl INNER JOIN productos AS p on wl.ProductID = p.id_producto WHERE wl.UserID=?'
+        res = seleccionSecure(sql, str(session['id_usuario']))
         if len(res)==0:
             flash('No se encontraron productos en la lista de deseos')
-        else:
-            return render_template("listadeseos.html", data=res)
-    else:
+        return render_template("listadeseos.html", data=res)
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
         flash('La sesión actual ha terminado. Debe iniciar sesión nuevamente', 'danger')
         return redirect('/login')
+
         
 @app.route("/clearWishListItem/<idItem>", methods= ["POST"])
 def clearWishListItem(idItem):
     sql = 'DELETE FROM WishList where WishListID=?'
     res = accion(sql, idItem)
     return sql;
+
+@app.route("/queryWishList", methods= ["POST"])
+def queryWishList():
+    try:
+        aItems = request.json
+        sSelected = ''
+        for item in aItems:
+            sSelected += item +', ' 
+        print (sSelected[0:len(sSelected)-2])
+        sql = f'SELECT id_producto, nombre_pro, tipo_pro, cantidad, precio_venta, descripcion FROM productos WHERE id_producto not in({sSelected[0:len(sSelected)-2]})'
+        res = seleccion(sql)
+        return jsonify(res)
+
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        flash('La sesión actual ha terminado. Debe iniciar sesión nuevamente', 'danger')
+        # return redirect('/login')
+        return jsonify({error: 'algo pasó'})
+    
+@app.route("/addWishProduct", methods= ["POST"])
+def addWishProduct():
+    try:
+        oItem = request.json
+        sql = 'SELECT max(WishListID) FROM WishList'
+        res = seleccion(sql)
+        idUser = session['id_usuario']
+        nextId = int(res[0][0])+1
+        
+        sqlInsert = f"INSERT INTO WishList ( WishListID, UserID, ProductID, WLDate) VALUES (?, ?, ?, CURRENT_TIMESTAMP)"
+
+        resInsert = accion(sqlInsert,(nextId, idUser, oItem['id']))
+
+        # return jsonify({"data": "t"})
+        return jsonify({"data": resInsert})
+
+    except Exception as ex:
+        template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+        message = template.format(type(ex).__name__, ex.args)
+        print(message)
+        flash('La sesión actual ha terminado. Debe iniciar sesión nuevamente', 'danger')
+        # return redirect('/login')
+        return jsonify({"error": 'algo pasó'})
 
 @app.route("/carcompras", methods= ["GET","POST"])
 def car_compras():
